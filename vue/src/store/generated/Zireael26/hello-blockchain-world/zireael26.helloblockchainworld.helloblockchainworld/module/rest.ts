@@ -22,6 +22,8 @@ export interface HelloblockchainworldQueryParamsResponse {
   params?: HelloblockchainworldParams;
 }
 
+export type HelloblockchainworldQueryPostsResponse = object;
+
 export interface ProtobufAny {
   "@type"?: string;
 }
@@ -240,6 +242,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryParams = (params: RequestParams = {}) =>
     this.request<HelloblockchainworldQueryParamsResponse, RpcStatus>({
       path: `/Zireael26/hello-blockchain-world/helloblockchainworld/params`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryPosts
+   * @summary Queries a list of Posts items.
+   * @request GET:/Zireael26/hello-blockchain-world/helloblockchainworld/posts
+   */
+  queryPosts = (params: RequestParams = {}) =>
+    this.request<HelloblockchainworldQueryPostsResponse, RpcStatus>({
+      path: `/Zireael26/hello-blockchain-world/helloblockchainworld/posts`,
       method: "GET",
       format: "json",
       ...params,

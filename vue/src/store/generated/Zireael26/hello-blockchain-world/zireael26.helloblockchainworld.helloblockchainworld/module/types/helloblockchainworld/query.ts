@@ -14,6 +14,10 @@ export interface QueryParamsResponse {
   params: Params | undefined;
 }
 
+export interface QueryPostsRequest {}
+
+export interface QueryPostsResponse {}
+
 const baseQueryParamsRequest: object = {};
 
 export const QueryParamsRequest = {
@@ -111,10 +115,88 @@ export const QueryParamsResponse = {
   },
 };
 
+const baseQueryPostsRequest: object = {};
+
+export const QueryPostsRequest = {
+  encode(_: QueryPostsRequest, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryPostsRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryPostsRequest } as QueryPostsRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryPostsRequest {
+    const message = { ...baseQueryPostsRequest } as QueryPostsRequest;
+    return message;
+  },
+
+  toJSON(_: QueryPostsRequest): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryPostsRequest>): QueryPostsRequest {
+    const message = { ...baseQueryPostsRequest } as QueryPostsRequest;
+    return message;
+  },
+};
+
+const baseQueryPostsResponse: object = {};
+
+export const QueryPostsResponse = {
+  encode(_: QueryPostsResponse, writer: Writer = Writer.create()): Writer {
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): QueryPostsResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseQueryPostsResponse } as QueryPostsResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): QueryPostsResponse {
+    const message = { ...baseQueryPostsResponse } as QueryPostsResponse;
+    return message;
+  },
+
+  toJSON(_: QueryPostsResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(_: DeepPartial<QueryPostsResponse>): QueryPostsResponse {
+    const message = { ...baseQueryPostsResponse } as QueryPostsResponse;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
+  /** Queries a list of Posts items. */
+  Posts(request: QueryPostsRequest): Promise<QueryPostsResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -130,6 +212,16 @@ export class QueryClientImpl implements Query {
       data
     );
     return promise.then((data) => QueryParamsResponse.decode(new Reader(data)));
+  }
+
+  Posts(request: QueryPostsRequest): Promise<QueryPostsResponse> {
+    const data = QueryPostsRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "zireael26.helloblockchainworld.helloblockchainworld.Query",
+      "Posts",
+      data
+    );
+    return promise.then((data) => QueryPostsResponse.decode(new Reader(data)));
   }
 }
 
