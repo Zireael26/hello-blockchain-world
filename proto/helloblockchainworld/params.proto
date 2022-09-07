@@ -1,0 +1,12 @@
+syntax = "proto3";
+package zireael26.helloblockchainworld.helloblockchainworld;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/Zireael26/hello-blockchain-world/x/helloblockchainworld/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+}
